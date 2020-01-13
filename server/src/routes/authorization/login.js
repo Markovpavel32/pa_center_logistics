@@ -1,11 +1,8 @@
 module.exports = (app, passport) => {
-  app.post('/login', passport.authenticate('local', {
-    successRedirect: '/home',
-    failureRedirect: '/login',
-    failureFlash: true
-  }))
-
-  app.get('/login', (req, res) => {
-    res.send('Login page. Please, authorize.')
-  })
+  app.post('/login',
+    passport.authenticate('local'),
+    function (req, res) {
+      res.send('User have been created!')
+    }
+  )
 }

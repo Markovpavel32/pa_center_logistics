@@ -41,3 +41,4 @@ app.get('/home', checkAuth(), (req, res) => {
 
 require('./routes/authorization/login')(app, passport)
 require('./routes/authorization/registration')(app, User)
+require('./routes/reception_documents/index')()

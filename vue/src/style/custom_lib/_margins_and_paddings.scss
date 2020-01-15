@@ -1,0 +1,47 @@
+.mt-default {
+  margin-top: $distance;
+}
+
+.mt-md {
+  margin-top: $distance * 3/2;
+}
+
+.mt-l {
+  margin-top: $distance * 2;
+}
+
+.mt-xl {
+  margin-top: $distance * 3;
+}
+
+.mt-xxl {
+  margin-top: $distance * 4;
+}
+
+.mt-xxxl {
+  margin-top: $distance * 8;
+}
+
+.mb-default {
+  margin-bottom: $distance;
+}
+
+.mb-md {
+  margin-bottom: $distance * 3/2;
+}
+
+.mb-l {
+  margin-bottom: $distance * 2;
+}
+
+.mb-xl {
+  margin-bottom: $distance * 3;
+}
+
+.mb-xxl {
+  margin-bottom: $distance * 4;
+}
+
+.mb-xxxl {
+  margin-bottom: $distance * 8;
+}

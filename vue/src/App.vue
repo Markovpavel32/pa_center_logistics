@@ -1,17 +1,21 @@
 <template>
-  <div id="app">
+  <div id="app" class="container">
     <img src="./assets/MainLogo.png"/>
     <router-view/>
   </div>
 </template>
 
 <style lang="scss">
+  @font-face {
+  font-family: SFUI-Display-Ragular; /* Гарнитура шрифта */
+  src: url(../src/assets/SFUIDISPLAY-REGULAR.OTF); /* Путь к файлу со шрифтом */
+ }
+
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+  /*font-family: SFUI-Display-Ragular;*/
+  /*-webkit-font-smoothing: antialiased;*/
+  /*-moz-osx-font-smoothing: grayscale;*/
+  /*color: #2c3e50;*/
 }
 
 #nav {

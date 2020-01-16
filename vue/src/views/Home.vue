@@ -1,5 +1,8 @@
 <template>
   <div class="home mt-xxxl">
+    <div class="bold mb-default">
+      <h3>Информация о документах</h3>
+    </div>
     <b-table striped hover :items="data.doc_lines" :fields="fields"></b-table>
   </div>
 </template>

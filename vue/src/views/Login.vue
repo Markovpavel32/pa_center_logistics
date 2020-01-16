@@ -14,7 +14,7 @@
           <input v-model="login" class="mb-default form-control" placeholder="Логин"/>
         </div>
         <div class="form-group">
-          <input v-model="password" class="mb-default form-control" placeholder="Пароль"/>
+          <input type="password" v-model="password" class="mb-default form-control" placeholder="Пароль"/>
         </div>
         <button class="btn btn-danger d-block w-100 mb-default" @click="auth">Войти в кабинет</button>
         <router-link :to="{ name: 'registration' }" class="btn btn-secondary d-block w-100" tag="button">Получить логин и пароль</router-link>

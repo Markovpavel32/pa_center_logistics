@@ -1,3 +1,39 @@
+.m-default {
+  margin: $distance;
+}
+
+.m-md {
+  margin: $distance * 3/2;
+}
+
+.m-l {
+  margin: $distance * 2;
+}
+
+.m-xl {
+  margin: $distance * 3;
+}
+
+.m-xxl {
+  margin: $distance * 4;
+}
+
+.m-xxxl {
+  margin: $distance * 8;
+}
+
+.mt-xxs {
+  margin-top: $distance / 8;
+}
+
+.mt-xs {
+  margin-top: $distance / 4;
+}
+
+.mt-sm {
+  margin-top: $distance / 2;
+}
+
 .mt-default {
   margin-top: $distance;
 }
@@ -44,4 +80,28 @@
 
 .mb-xxxl {
   margin-bottom: $distance * 8;
+}
+
+.mr-default {
+  margin-right: $distance;
+}
+
+.mr-md {
+  margin-right: $distance * 3/2;
+}
+
+.mr-l {
+  margin-right: $distance * 2;
+}
+
+.mr-xl {
+  margin-right: $distance * 3;
+}
+
+.mr-xxl {
+  margin-right: $distance * 4;
+}
+
+.mr-xxxl {
+  margin-right: $distance * 8;
 }

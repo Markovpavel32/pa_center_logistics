@@ -1,8 +1,8 @@
 module.exports = (app, passport) => {
-  app.post('/login',
-    passport.authenticate('local'),
-    function (req, res) {
-      res.send('User have been created!')
-    }
-  )
+  app.post('/login', (req, res) => {
+    passport.authenticate('local', (err, user, info) => {
+      if (!user) res.status(401).send(info.message)
+      else res.send('Welcome')
+    })(req,res)
+  })
 }

@@ -7,8 +7,8 @@ const local_strategy = new LocalStrategy({
 }, (login, password, done) => {
   User.findOne({ where: { login } })
     .then((user) => {
-      if (!user) return done(null, false, { errors: { 'email or password': 'is invalid' } });
-      if (user.password != password) return done(null, false, { errors: { 'password': 'is invalid' } });
+      if (!user) return done(null, false, { message: 'Пользователь не найден' });
+      if (user.password != password) return done(null, false, { message: 'Неверный пароль' });
       return done(null, user)
     })
 })

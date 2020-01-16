@@ -50,8 +50,9 @@ export default {
     auth () {
       axios_post('/login', this.model)
         .then(() => { this.$router.push({ name: 'home' }) })
-        .catch(e => {
-          this.error_text = e.message
+        .catch((e, res, req) => {
+          console.log(e.message, res, req)
+          this.error_text = e.response.data
         })
     }
   }

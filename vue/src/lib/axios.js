@@ -18,3 +18,7 @@ export const axios_post = (url, data, config) => {
   data = qs.stringify({ ...(new_data || {}) })
   return axios_tuned.post(url, data, config)
 }
+
+export const axios_get = (url, config) => {
+  return axios_tuned.get(url, config)
+}

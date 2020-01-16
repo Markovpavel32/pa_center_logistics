@@ -6,6 +6,7 @@ const config = require('../config/config')
 const passport = require('passport')
 const flash = require('connect-flash')
 const session = require('express-session')
+const { checkAuth } = require('./lib/index')
 require('./passport/passport')
 const { User } = require('./models/user')
 const app = express()
@@ -18,15 +19,6 @@ app.use(session({secret: 'you secret key'}))
 app.use(flash())
 app.use(passport.initialize())
 app.use(passport.session())
-
-function checkAuth () {
-  return (req, res, next) => {
-    if(req.user)
-      next()
-    else
-      res.redirect('/login')
-  }
-}
 
 passport.serializeUser((user, done) => done(null, user))
 passport.deserializeUser((user, done) => done(null, user))
@@ -41,4 +33,4 @@ app.get('/home', checkAuth(), (req, res) => {
 
 require('./routes/authorization/login')(app, passport)
 require('./routes/authorization/registration')(app, User)
-require('./routes/reception_documents/index')()
+require('./routes/reception_documents/index')(app)

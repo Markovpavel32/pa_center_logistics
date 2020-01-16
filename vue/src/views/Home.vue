@@ -1,17 +1,46 @@
 <template>
-  <div class="home">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div class="home mt-xxxl">
+    <b-table striped hover :items="data.doc_lines" :fields="fields"></b-table>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+
+import { axios_get } from '../lib/axios'
 
 export default {
   name: 'home',
-  components: {
-    HelloWorld
+  data () {
+    return {
+      data: {},
+      fields: [{
+        key: 'doc_number',
+        label: 'Номер документа'
+      },
+      {
+        key: 'doc_date',
+        label: 'Дата'
+      },
+      {
+        key: 'act_number',
+        label: 'Номер акта'
+      },
+      {
+        key: 'shipper',
+        label: 'Отправитель груза'
+      },
+      {
+        key: 'status',
+        label: 'Статус заказа'
+      }]
+    }
+  },
+  created () {
+    axios_get('reception_documents')
+      .then(resp => {
+        console.log(resp)
+        this.data = resp.data
+      })
   }
 }
 </script>

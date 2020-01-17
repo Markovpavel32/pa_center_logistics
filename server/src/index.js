@@ -27,8 +27,8 @@ app.listen(process.env.PORT || config.port,
   () => console.log(`Server start on port ${config.port} ...`))
 
 
-app.get('/home', checkAuth(), (req, res) => {
-  res.send('Home page. You\'re authorized.')
+app.get('/', (req, res) => {
+  res.end('<h1>Home page</h1>')
 })
 
 require('./routes/authorization/login')(app, passport)

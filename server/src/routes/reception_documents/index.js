@@ -1,5 +1,6 @@
 const { Client } = require('pg')
- const { checkAuth } = require('../../lib/index')
+const { checkAuth } = require('../../lib/index')
+
 module.exports = (app) => {
   const client = new Client({
     host: '94.228.196.246',

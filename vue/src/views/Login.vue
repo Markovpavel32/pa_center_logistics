@@ -51,7 +51,6 @@ export default {
       axios_post('/login', this.model)
         .then(() => { this.$router.push({ name: 'home' }) })
         .catch((e, res, req) => {
-          console.log(e.message, res, req)
           this.error_text = e.response.data
         })
     }

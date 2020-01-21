@@ -8,7 +8,7 @@
 </template>
 
 <script>
-
+// import { normalize, schema } from 'normalizr'
 import { axios_get } from '../lib/axios'
 
 export default {
@@ -40,9 +40,8 @@ export default {
   },
   created () {
     axios_get('reception_documents')
-      .then(resp => {
-        console.log(resp)
-        this.data = resp.data
+      .then(res => {
+        this.data = res.data
       })
   }
 }

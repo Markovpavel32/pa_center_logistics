@@ -23,7 +23,10 @@ const routes = [
   {
     path: '/login',
     name: 'login',
-    component: Login
+    component: Login,
+    meta: {
+      layout: 'AuthLayout'
+    }
   },
   {
     path: '/registration',

@@ -1,10 +1,11 @@
 import axios from 'axios'
 import qs from 'qs'
-
 const port = 8081
+const server_url = process.env.NODE_ENV === 'development' ? location.protocol + '//' + location.hostname + ':' + port
+  : 'https://radiant-fortress-28922.herokuapp.com/'
 
 const axios_tuned = axios.create({
-  baseURL: location.protocol + '//' + location.hostname + ':' + port,
+  baseURL: server_url,
   headers: {
     'Content-type': 'application/x-www-form-urlencoded'
   }

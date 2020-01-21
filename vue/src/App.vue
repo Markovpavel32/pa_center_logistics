@@ -1,22 +1,23 @@
 <template>
-  <div id="app" class="container">
-    <img src="./assets/MainLogo.png"/>
-    <router-view/>
+  <div id="app">
+    <vue-extend-layouts />
   </div>
 </template>
+
+<script>
+import VueExtendLayouts from 'vue-extend-layout'
+
+export default {
+  name: 'App',
+  components: { VueExtendLayouts }
+}
+</script>
 
 <style lang="scss">
   @font-face {
   font-family: SFUI-Display-Ragular; /* Гарнитура шрифта */
   src: url(../src/assets/SFUIDISPLAY-REGULAR.OTF); /* Путь к файлу со шрифтом */
  }
-
-#app {
-  /*font-family: SFUI-Display-Ragular;*/
-  /*-webkit-font-smoothing: antialiased;*/
-  /*-moz-osx-font-smoothing: grayscale;*/
-  /*color: #2c3e50;*/
-}
 
 #nav {
   padding: 30px;

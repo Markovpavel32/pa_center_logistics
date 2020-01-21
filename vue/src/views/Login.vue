@@ -16,8 +16,11 @@
         <div class="form-group">
           <input type="password" v-model="password" class="mb-default form-control" placeholder="Пароль"/>
         </div>
-        <button class="btn btn-danger d-block w-100 mb-default" @click="auth">Войти в кабинет</button>
-        <router-link :to="{ name: 'registration' }" class="btn btn-secondary d-block w-100" tag="button">Получить логин и пароль</router-link>
+        <b-button squared class="d-block w-100 mb-default" variant="danger" @click="auth">
+          <span v-if="!pending">Войти в кабинет</span>
+          <b-spinner v-else small></b-spinner>
+        </b-button>
+        <router-link :to="{ name: 'registration' }" class="btn btn-secondary rounded-0 d-block w-100" tag="button">Получить логин и пароль</router-link>
       </div>
     </div>
   </div>
@@ -30,10 +33,13 @@ export default {
   name: 'login',
 
   data () {
+    const env = process.env.NODE_ENV
     return {
       login: '',
       password: '',
-      error_text: ''
+      error_text: '',
+      pending: false,
+      env
     }
   },
 
@@ -43,16 +49,33 @@ export default {
         login: this.login,
         password: this.password
       }
+    },
+
+    is_valid () {
+      return this.login && this.password && !this.pending
     }
   },
 
   methods: {
     auth () {
-      axios_post('/login', this.model)
-        .then(() => { this.$router.push({ name: 'home' }) })
-        .catch((e, res, req) => {
-          this.error_text = e.response.data
-        })
+      if (this.is_valid) {
+        this.toggle_pending()
+        axios_post('/login', this.model)
+          .then(() => {
+            this.toggle_pending()
+            this.$router.push({ name: 'home' })
+          })
+          .catch((e) => {
+            this.toggle_pending()
+            this.error_text = e.response.data
+          })
+      } else {
+        this.error_text = 'Введите логин/пароль'
+      }
+    },
+
+    toggle_pending () {
+      this.pending = !this.pending
     }
   }
 }

@@ -43,6 +43,9 @@ export default {
       .then(res => {
         this.data = res.data
       })
+      .catch(e => {
+        if (e.response.status === 404) this.$router.push({ name: 'login', params: { error_text: 'Войдтите в личный кабинет' } })
+      })
   }
 }
 </script>

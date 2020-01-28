@@ -28,7 +28,7 @@
 
 <script>
 import { axios_post } from '../lib/axios'
-
+import { Auth } from '../components/login/data_presenters'
 export default {
   name: 'login',
 
@@ -41,6 +41,10 @@ export default {
       pending: false,
       env
     }
+  },
+
+  created () {
+    this.error_text = this.$route.params.error_text
   },
 
   computed: {
@@ -61,8 +65,8 @@ export default {
       if (this.is_valid) {
         this.toggle_pending()
         axios_post('/login', this.model)
-          .then(() => {
-            this.toggle_pending()
+          .then(res => {
+            new Auth().login(res.data, this.$store)
             this.$router.push({ name: 'home' })
           })
           .catch((e) => {

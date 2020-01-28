@@ -14,3 +14,5 @@ const local_strategy = new LocalStrategy({
 })
 
 passport.use(local_strategy)
+
+module.exports = passport

@@ -8,7 +8,7 @@
         {{'На выдачу'}}
       </b-nav-item>
       <b-nav-item>
-        {{'На доставу'}}
+        {{'На доставку'}}
       </b-nav-item>
     </b-nav>
     <div class="bold mb-default">
@@ -27,7 +27,7 @@
         </div>
       </template>
       <template v-slot:cell(status)="data">
-        <span class="badge badge-info">{{ data.value }}</span>
+        <span class="badge"  :class="status_badge(data.value)">{{ data.value }}</span>
       </template>
     </b-table>
     <b-pagination v-model="current_page"
@@ -40,6 +40,15 @@
 <script>
 import { axios_get } from '../../lib/axios'
 import moment from 'moment'
+
+const STATUS_BADGES = {
+  'Акцептована': 'badge-primary',
+  'Не акцептована': 'badge-danger',
+  'В работе': 'badge-warning',
+  'Выполнена': 'badge-success',
+  'Собрана': 'badge-secondary',
+  'Ждет отгрузки': 'badge-info'
+}
 
 export default {
   name: 'application-log',
@@ -102,6 +111,10 @@ export default {
   methods: {
     toggle_pending () {
       this.pending = !this.pending
+    },
+
+    status_badge (value) {
+      return STATUS_BADGES[value]
     }
   }
 }

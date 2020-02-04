@@ -9,8 +9,18 @@ const app = express()
 const passport = require('../src/passport/passport')
 const { User } = require('./models/user')
 
+const whitelist = ['http://localhost:8080', 'https://elated-colden-9b09d4.netlify.com']
 app.use(morgan('combined'))
-app.use(cors({credentials: true, origin: 'http://localhost:8080'}))
+app.use(cors({
+  credentials: true,
+  origin: function (origin, callback) {
+    if (whitelist.indexOf(origin) !== -1) {
+      callback(null, true)
+    } else {
+      callback(new Error('Not allowed by CORS'))
+    }
+  }
+}))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(session({

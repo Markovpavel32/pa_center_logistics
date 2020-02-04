@@ -9,6 +9,19 @@
           <b-button variant="light">Выход</b-button>
         </b-navbar-nav>
       </b-navbar>
+      <b-nav fill>
+        <b-nav-item :to="{name: 'application_log' }" active-class="active-link" link-classes="nav-link" class="">
+          <span class="application_log_item">
+            <img src="../assets/application_log.svg" />
+            {{'Журнал заявок'}}
+          </span>
+        </b-nav-item>
+        <b-nav-item link-classes="nav-link">{{'Мои товары'}}</b-nav-item>
+        <b-nav-item link-classes="nav-link">{{'Журнал документов'}}</b-nav-item>
+        <b-nav-item link-classes="nav-link">{{'Статистика и отчеты'}}</b-nav-item>
+        <b-nav-item link-classes="nav-link">{{'Споры'}}</b-nav-item>
+        <b-nav-item link-classes="nav-link">{{'Оплата'}}</b-nav-item>
+      </b-nav>
       <router-view></router-view>
     </div>
 </template>

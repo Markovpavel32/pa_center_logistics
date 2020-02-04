@@ -1,3 +1,19 @@
 .bold {
   font-weight: bold;
 }
+
+.nav-link {
+  color: $black;
+}
+
+.active-link > span {
+  border-bottom: 2px solid $red;
+}
+
+.application_log_item {
+  padding-bottom: $distance / 4;
+}
+
+.application_log__service_cost_column {
+  color: $danger;
+}

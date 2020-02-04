@@ -1,23 +1,6 @@
-const { Client } = require('pg')
 const { checkAuth } = require('../../lib/index')
 
-module.exports = app => {
-  const client = new Client({
-    host: '94.228.196.246',
-    port: 5434,
-    user: 'lk',
-    password: 'AJFGrLs6azpwE3k',
-    database: 'service'
-  })
-
-  client.connect(err => {
-    if (err) {
-        console.error('connection error', err.stack)
-    } else {
-        console.log('connected')
-    }
-  })
-
+module.exports = (app, client) => {
   app.get(
     '/reception_documents',
     checkAuth(),

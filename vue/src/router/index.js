@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Login from '../views/Login'
 import Registration from '../views/Registration'
+import ApplicationLog from '../components/application_log/ApplicationLog'
 
 Vue.use(VueRouter)
 
@@ -11,6 +12,11 @@ const routes = [
     path: '/home',
     name: 'home',
     component: Home
+  },
+  {
+    path: '/application_log',
+    name: 'application_log',
+    component: ApplicationLog
   },
   {
     path: '/about',

@@ -6,6 +6,9 @@ import { BootstrapVue, BootstrapVueIcons } from 'bootstrap-vue'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import 'bootstrap/dist/css/bootstrap.css'
 import './style/style.scss'
+import { dom } from '@fortawesome/fontawesome-svg-core'
+
+dom.watch()
 
 Vue.use(BootstrapVue)
 Vue.use(BootstrapVueIcons)

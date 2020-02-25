@@ -1,10 +1,1 @@
-// export class ModelEntity {
-//   constructor () {
-//
-//   }
-// }
-//
-// export class ModelEntityRelation {
-//   constructor () {
-//   }
-// }
+// import { normalize, schema } from 'normalizr'

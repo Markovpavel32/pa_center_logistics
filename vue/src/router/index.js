@@ -4,6 +4,9 @@ import Home from '../views/Home.vue'
 import Login from '../views/Login'
 import Registration from '../views/Registration'
 import ApplicationLog from '../components/application_log/ApplicationLog'
+import ApplicationLogAppointment from '../components/application_log/ApplicationLogAppointment'
+import ApplicationLogDelivery from '../components/application_log/ApplicationLogDelivery'
+import ApplicationLogToIssue from '../components/application_log/ApplicationLogToIssue'
 
 Vue.use(VueRouter)
 
@@ -11,12 +14,31 @@ const routes = [
   {
     path: '/home',
     name: 'home',
-    component: Home
+    component: Home,
+    redirect: { name: 'application_log' }
   },
   {
     path: '/application_log',
     name: 'application_log',
-    component: ApplicationLog
+    component: ApplicationLog,
+    redirect: { name: 'application_log_appointment' },
+    children: [
+      {
+        path: 'appointment',
+        name: 'application_log_appointment',
+        component: ApplicationLogAppointment
+      },
+      {
+        path: 'to_issue',
+        name: 'application_log_to_issue',
+        component: ApplicationLogToIssue
+      },
+      {
+        path: 'delivery',
+        name: 'application_log_delivery',
+        component: ApplicationLogDelivery
+      }
+    ]
   },
   {
     path: '/about',

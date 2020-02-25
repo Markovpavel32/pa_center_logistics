@@ -54,5 +54,6 @@ app.listen(process.env.PORT || config.port,
 require('./routes/authorization/login')(app, passport)
 require('./routes/authorization/registration')(app, User)
 require('./routes/reception_documents/index')(app, client)
-require('./routes/application_log/application_log')(app, client)
+require('./routes/application_log/application_log_appointment')(app, client)
+require('./routes/application_log/application_log_to_issue')(app, client)
 require('./routes/authorization/user_data')(app)

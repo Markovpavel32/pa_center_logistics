@@ -1,4 +1,5 @@
 <template>
+  <div>
     <b-card bg-variant="light">
       <b-card-title>Новая заявка</b-card-title>
       <div class="row mb-default">
@@ -39,17 +40,23 @@
       </div>
       <div class="row">
         <div class="col-sm-2" >
-          <b-button variant="primary" squared>Добавить товар</b-button>
+          <b-button variant="primary" @click="modal_show = !modal_show" squared>Добавить товар</b-button>
         </div>
       </div>
     </b-card>
+    <product-add v-if="modal_show" :modal_show="modal_show" @change="modal_show = $event"></product-add>
+  </div>
 </template>
 
 <script>
 import moment from 'moment'
+import ProductAdd from '../product/ProductAdd'
 
 export default {
   name: 'application-create',
+  components: {
+    ProductAdd
+  },
   data () {
     return {
       moment,
@@ -58,7 +65,8 @@ export default {
         app_number: '',
         delivery_date: '',
         refund: ''
-      }
+      },
+      modal_show: false
     }
   }
 }

@@ -2,7 +2,7 @@
 <div>
   <div class="bold mb-default d-flex justify-content-between">
     <h3>Заявки на приём товаров</h3>
-    <b-button variant="warning" squared class="d-flex align-items-center">
+    <b-button variant="warning" squared class="d-flex align-items-center" @click="is_create = !is_create">
       <img src="../../assets/plus-warning-filled.png" width="24" hight="24"/>
       <span>Создать заявку</span>
     </b-button>
@@ -36,7 +36,6 @@ import { AjaxOperator } from '../../lib/axios'
 import moment from 'moment'
 import { STATUS_BADGES } from './CONSTANTS'
 import ApplicationCreate from './ApplicationCreate'
-// import { normalize, schema } from 'normalizr'
 
 export default {
   name: 'application-log-appointment',

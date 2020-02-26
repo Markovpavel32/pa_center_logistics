@@ -20,7 +20,6 @@ export default {
         this.total_rows = this.data.length
       })
       .catch(e => {
-        console.log(e)
         if (e.response.status === 404) this.$router.push({ name: 'login', params: { error_text: 'Войдтите в личный кабинет' } })
       })
   }

@@ -84,7 +84,6 @@ export default {
         this.toggle_pending()
       })
       .catch(e => {
-        console.log(e)
         if (e.response.status === 404) this.$router.push({ name: 'login', params: { error_text: 'Войдтите в личный кабинет' } })
       })
   },

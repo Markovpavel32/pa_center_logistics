@@ -1,4 +1,5 @@
 const { checkAuth } = require('../../lib/index')
+const { paginate } = require('../../lib/paginate')
 
 module.exports = (app, client) => {
   app.get(
@@ -6,7 +7,8 @@ module.exports = (app, client) => {
     checkAuth(),
     function (req, res) {
       client.query(`SELECT 
-            t."ид7" AS "товар_ид", 
+            t."ид7" AS "товар_ид",
+            t."Код" AS "штрихкод",
             t."Наименование" AS "товар_наименование", 
             t."Артикул" AS "артикул", 
             t."Характеристика" AS "размер", 
@@ -22,7 +24,7 @@ module.exports = (app, client) => {
           ORDER BY t."Наименование", t."ид7"
             ;`)
         .then(result => {
-          res.json(result)
+          paginate(result, req, res)
         })
         .catch(e => console.error(e.stack))
     }

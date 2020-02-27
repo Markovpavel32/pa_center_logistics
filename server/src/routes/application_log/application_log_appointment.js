@@ -1,5 +1,5 @@
 const { checkAuth } = require('../../lib/index')
-
+const { paginate } = require('../../lib/paginate')
 module.exports = (app, client) => {
   app.get(
     '/application_log/appointment',
@@ -9,6 +9,10 @@ module.exports = (app, client) => {
           "ид7" doc_id
           ,"НомерЗаявки" app_number
           ,"ДатаЗаявки" app_date
+          ,(CASE
+          WHEN "ДатаСдачи" = '0001-01-01'::date THEN null
+          ELSE "ДатаСдачи"
+          END ) плановая_дата
           ,(CASE
           WHEN "Выполнена" THEN 'Выполнена'
           WHEN "Статус">=3 THEN 'Принимается'
@@ -23,7 +27,7 @@ module.exports = (app, client) => {
           ORDER BY "ДатаЗаявки", "ид7" 
           ;`)
         .then(result => {
-          res.json(result.rows.slice(0, 19))
+          paginate(result, req, res)
         })
         .catch(e => console.error(e.stack))
     }

@@ -59,7 +59,10 @@ const routes = [
   {
     path: '/registration',
     name: 'registration',
-    component: Registration
+    component: Registration,
+    meta: {
+      layout: 'AuthLayout'
+    }
   }
 ]
 

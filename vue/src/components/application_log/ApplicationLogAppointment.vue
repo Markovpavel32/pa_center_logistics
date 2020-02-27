@@ -12,7 +12,6 @@
            style="border: 2px solid white; font-size: 13px; line-height: 16px"
            :items="data"
            :fields="fields"
-           :per-page="per_page"
            :current-page="current_page">
     <template v-slot:table-busy>
       <div class="text-center text-danger my-2">
@@ -27,6 +26,7 @@
   <b-pagination v-model="current_page"
                 :total-rows="total_rows"
                 :per-page="per_page"
+                @change="get_applications"
                 aria-controls="application_log_table"></b-pagination>
 </div>
 </template>
@@ -63,29 +63,20 @@ export default {
           key: 'status',
           label: 'Статус',
           sortable: true
+        },
+        {
+          key: 'плановая_дата',
+          label: 'Дата поставки',
+          sortable: true,
+          formatter: (value) => moment(value).format('DD.MM.YYYY')
         }
-        // {
-        //   key: 'app_date',
-        //   label: 'Дата поставки',
-        //   sortable: true,
-        //   formatter: (value) => moment(value).format('DD.MM.YYYY')
-        // }
       ],
       is_create: true
     }
   },
 
   created () {
-    this.toggle_pending()
-    new AjaxOperator('application_log/appointment', this.$store, 'application_appointment', 'doc_id').get()
-      .then(data => {
-        this.data = data
-        this.total_rows = this.data.length
-        this.toggle_pending()
-      })
-      .catch(e => {
-        if (e.response.status === 404) this.$router.push({ name: 'login', params: { error_text: 'Войдтите в личный кабинет' } })
-      })
+    this.get_applications()
   },
 
   methods: {
@@ -95,6 +86,24 @@ export default {
 
     status_badge (value) {
       return STATUS_BADGES[value]
+    },
+
+    get_applications (page = 1) {
+      this.toggle_pending()
+      new AjaxOperator('application_log/appointment', this.$store, 'application_appointment', 'doc_id').get({
+        params: {
+          page,
+          limit: this.per_page
+        }
+      })
+        .then(data => {
+          this.data = data.result
+          this.total_rows = data.total
+          this.toggle_pending()
+        })
+        .catch(e => {
+          if (e.response.status === 404) this.$router.push({ name: 'login', params: { error_text: 'Войдтите в личный кабинет' } })
+        })
     }
   }
 }

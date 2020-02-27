@@ -1,6 +1,7 @@
 import axios from 'axios'
 import qs from 'qs'
 import { normalize, schema } from 'normalizr'
+import { ModuleData } from './module_data_presenter'
 
 const port = 8081
 const server_url = process.env.NODE_ENV === 'development' ? location.protocol + '//' + location.hostname + ':' + port
@@ -53,9 +54,12 @@ export class AjaxOperator {
   get (config) {
     return axios_get(this.url, config).then(res => {
       const entity = new schema.Entity(this.model_name, {}, { idAttribute: this._idAttribute })
-      const normalized_data = normalize(res.data, [entity])
-      if (!this.store.state.models.application_appointment) {
-        this.store.registerModule(['models', this.model_name], { state: normalized_data.entities[this.model_name] })
+      const normalized_data = normalize(res.data.result, [entity])
+      if (!this.store.state.models[this.model_name]) {
+        this.store.registerModule(['models', this.model_name], new ModuleData().generate(normalized_data.entities[this.model_name]))
+      } else {
+        console.log(1)
+        this.store.dispatch(`${this.model_name}/insert_list`, { data: normalized_data.entities[this.model_name], model: this.model_name })
       }
       return res.data
     })

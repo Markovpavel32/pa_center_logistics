@@ -1,13 +1,17 @@
 <template>
 <div>
-  <div class="bold mb-default">
+  <div class="bold mb-default d-flex justify-content-between">
     <h3>Заявки на выдачу товаров</h3>
+    <b-button variant="warning" squared class="d-flex align-items-center" @click="is_create = !is_create">
+      <img src="../../assets/plus-warning-filled.png" width="24" hight="24"/>
+      <span>Создать заявку</span>
+    </b-button>
   </div>
+  <application-create type="to_issue" @close="is_create = $event" v-if="is_create"></application-create>
   <b-table id="application_log_appointment_table" hover small :busy="pending"
            style="border: 2px solid white; font-size: 13px; line-height: 16px"
            :items="data"
            :fields="fields"
-           :per-page="per_page"
            :current-page="current_page">
     <template v-slot:table-busy>
       <div class="text-center text-danger my-2">
@@ -22,6 +26,7 @@
   <b-pagination v-model="current_page"
                 :total-rows="total_rows"
                 :per-page="per_page"
+                @change="get_applications"
                 aria-controls="application_log_table"></b-pagination>
 </div>
 </template>
@@ -30,9 +35,11 @@
 import { AjaxOperator } from '../../lib/axios'
 import { STATUS_BADGES } from './CONSTANTS'
 import moment from 'moment'
+import ApplicationCreate from './ApplicationCreate'
 
 export default {
   name: 'application-log-to-issue',
+  components: { ApplicationCreate },
   data () {
     return {
       pending: false,
@@ -69,21 +76,13 @@ export default {
       //   sortable: true,
       //   formatter: (value) => moment(value).format('DD.MM.YYYY')
       // }
-      ]
+      ],
+      is_create: false
     }
   },
 
   created () {
-    this.toggle_pending()
-    new AjaxOperator('application_log/to_issue', this.$store, 'application_to_issue', 'ид').get()
-      .then(data => {
-        this.data = data
-        this.total_rows = this.data.length
-        this.toggle_pending()
-      })
-      .catch(e => {
-        if (e.response.status === 404) this.$router.push({ name: 'login', params: { error_text: 'Войдтите в личный кабинет' } })
-      })
+    this.get_applications()
   },
 
   methods: {
@@ -93,6 +92,26 @@ export default {
 
     status_badge (value) {
       return STATUS_BADGES[value]
+    },
+
+    get_applications (page = 1) {
+      this.toggle_pending()
+      new AjaxOperator('application_log/to_issue', this.$store, 'application_to_issue', 'ид').get({
+        params: {
+          page,
+          limit: this.per_page
+        }
+      })
+        .then(data => {
+          console.log(data)
+          this.data = data.result
+          this.total_rows = data.total
+          this.toggle_pending()
+        })
+        .catch(e => {
+          console.log(e)
+          if (e.response.status === 404) this.$router.push({ name: 'login', params: { error_text: 'Войдтите в личный кабинет' } })
+        })
     }
   }
 }

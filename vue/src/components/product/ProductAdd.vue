@@ -13,7 +13,7 @@
         </div>
       </template>
       <template v-slot:cell(add)="data">
-        <a class="btn btn-link no-padding btn-sm">Добавить</a>
+        <a class="btn btn-link no-padding btn-sm" @click="$emit('add', data.item)">Добавить</a>
       </template>
     </b-table>
     <b-pagination v-model="current_page"
@@ -91,6 +91,10 @@ export default {
 
     toggle_pending () {
       this.pending = !this.pending
+    },
+
+    add (data) {
+      console.log(data)
     }
   }
 }

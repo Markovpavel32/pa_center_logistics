@@ -53,20 +53,18 @@ export class AjaxOperator {
 
   get (config) {
     return axios_get(this.url, config).then(res => {
-      const entity = new schema.Entity(this.model_name, {}, { idAttribute: this._idAttribute })
-      const normalized_data = normalize(res.data.result, [entity])
+      const normalized_data = this.normalize(res)
       if (!this.store.state.models[this.model_name]) {
         this.store.registerModule(['models', this.model_name], new ModuleData().generate(normalized_data.entities[this.model_name]))
       } else {
-        console.log(1)
-        this.store.dispatch(`${this.model_name}/insert_list`, { data: normalized_data.entities[this.model_name], model: this.model_name })
+        this.store.dispatch(`${this.model_name}/insert_list`, { data: normalized_data.entities[this.model_name] })
       }
       return res.data
     })
   }
 
   post (data, config) {
-    return axios_get(this.url, data, config)
+    return axios_post(this.url, data, config)
   }
 
   model (model_name) {
@@ -75,5 +73,13 @@ export class AjaxOperator {
   // переопределения ключа id для normalizr (можно выбрать любое проперти объекта в качестве ключа для нормалайза)
   idAttribute (id_key) {
     this._idAttribute = id_key
+  }
+
+  normalize (res) {
+    const entity = new schema.Entity(this.model_name, {}, { idAttribute: this._idAttribute })
+    if (Array.isArray(res.data.result)) {
+      return normalize(res.data.result, [entity])
+    }
+    return normalize(res.data.result, entity)
   }
 }

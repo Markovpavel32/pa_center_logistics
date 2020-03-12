@@ -7,7 +7,7 @@
       <span>Создать заявку</span>
     </b-button>
   </div>
-  <application-create v-if="is_create"></application-create>
+  <application-create type="appointment" @close="is_create = $event" v-if="is_create"></application-create>
   <b-table id="application_log_appointment_table" hover small :busy="pending"
            style="border: 2px solid white; font-size: 13px; line-height: 16px"
            :items="data"
@@ -71,7 +71,7 @@ export default {
           formatter: (value) => moment(value).format('DD.MM.YYYY')
         }
       ],
-      is_create: true
+      is_create: false
     }
   },
 

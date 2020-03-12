@@ -6,30 +6,40 @@
         <div class="col-sm-3">
           <label class="d-flex align-items-center">
             <span class="mr-default">Дата заявки:</span>
-            <b-input class="col-sm-6" :value="model.app_date" readonly></b-input>
+            <b-input class="col-sm-6" :value="model.document_date" readonly></b-input>
           </label>
         </div>
         <div class="col-sm-4">
           <label class="d-flex align-items-center">
             <span class="mr-default">Номер заявки:</span>
-            <b-input class="col-sm-7" v-model="model.app_number" placeholder="Укажите номер заявки"></b-input>
+            <b-input class="col-sm-7" v-model="model.document_number" placeholder="Укажите номер заявки"></b-input>
           </label>
         </div>
         <div class="col-sm-5">
           <label class="d-flex align-items-center">
             <span class="mr-default">Дата доставки:</span>
-            <b-input class="col-sm-8" v-model="model.delivery_date" placeholder="Укажите дату доставки товара"></b-input>
+            <date-picker v-model="model.scheduled_date" class="form-control" :config="datepicker_options"></date-picker>
           </label>
         </div>
       </div>
-      <div class="row mb-default">
+      <div class="row mb-default" v-if="type === 'appointment'">
         <div class="col-sm-3">Поставка является возвратом?</div>
         <div class="col-sm-1">
-          <div class="d-flex"><span>Да</span><b-radio v-model="model.refund" name="some-radios" value="yes"></b-radio></div>
+          <div class="d-flex"><span>Да</span><b-radio v-model="refund" value="yes"></b-radio></div>
         </div>
         <div class="col-sm-1">
-          <div class="d-flex"><span>Нет</span><b-radio v-model="model.refund" name="some-radios" value="no"></b-radio></div>
+          <div class="d-flex"><span>Нет</span><b-radio v-model="model.refund" value="no"></b-radio></div>
         </div>
+      </div>
+      <div class="row mb-default" v-if="type === 'to_issue'">
+        <div class="col-sm-3">Самостоятельно доставлю груз</div>
+        <div class="col-sm-1">
+          <div class="d-flex"><b-checkbox v-model="model.self_delivery"></b-checkbox></div>
+        </div>
+      </div>
+      <div v-if="type === 'to_issue'" class="row mb-default d-flex align-items-center">
+        <div class="col-sm-2">Грузополучатель:</div>
+        <vue-bootstrap-typeahead class="col-sm-6 pl-0" v-model="model.consignee"></vue-bootstrap-typeahead>
       </div>
       <div class="row mb-default">
         <div class="col-sm-2">Примечание:</div>
@@ -38,35 +48,100 @@
       <div class="row mb-default">
         <div class="col-sm-2">Список товаров:</div>
       </div>
-      <div class="row">
+      <b-table v-if="items.length" :items="items" :fields="product_table_settings.fields">
+        <template v-slot:cell(quantity)="data">
+          <b-input v-model="model.document_lines[data.index].quantity"></b-input>
+        </template>
+      </b-table>
+      <div class="row justify-content-between">
         <div class="col-sm-2" >
           <b-button variant="primary" @click="modal_show = !modal_show" squared>Добавить товар</b-button>
         </div>
+        <div class="col-sm-2" >
+          <b-button variant="warning" @click="create_application" squared>Создать заявку</b-button>
+        </div>
       </div>
     </b-card>
-    <product-add v-if="modal_show" :modal_show="modal_show" @change="modal_show = $event"></product-add>
+    <product-add @add="add" v-if="modal_show" :modal_show="modal_show" @change="modal_show = $event"></product-add>
   </div>
 </template>
 
 <script>
 import moment from 'moment'
 import ProductAdd from '../product/ProductAdd'
+import { AjaxOperator } from '../../lib/axios'
 
 export default {
   name: 'application-create',
   components: {
     ProductAdd
   },
+  props: {
+    type: {
+      required: true,
+      type: String
+    }
+  },
   data () {
     return {
       moment,
       model: {
-        app_date: moment(new Date()).format('DD.MM.YYYY'),
-        app_number: '',
-        delivery_date: '',
-        refund: ''
+        document_date: moment(new Date()).format('DD.MM.YYYY'),
+        document_number: '',
+        scheduled_date: '',
+        document_lines: [],
+        self_delivery: false,
+        consignee: ''
       },
-      modal_show: false
+      refund: '',
+      datepicker_options: {
+        format: 'DD.MM.YYYY',
+        locale: 'ru'
+      },
+      items: [],
+      modal_show: false,
+      product_table_settings: {
+        fields: [
+          {
+            label: 'Артикул',
+            key: 'артикул'
+          },
+          {
+            label: 'Штрих-код единицы',
+            key: 'штрихкод'
+          },
+          {
+            label: 'Наименование товара',
+            key: 'товар_наименование'
+          },
+          {
+            label: 'Количество',
+            key: 'quantity'
+          },
+          {
+            label: 'Един. измерения',
+            key: 'единица_наименование'
+          },
+          {
+            label: 'Удалить'
+          }
+        ]
+      }
+    }
+  },
+
+  methods: {
+    add (item) {
+      this.model.document_lines.push({ 'product': item['товар_ид'], unit: item['единица_ид'], quantity: 0 })
+      this.items.push(item)
+    },
+
+    create_application () {
+      new AjaxOperator('/application_log/appointment').post(this.model).then(result => this.$emit('close', false))
+    },
+
+    get (data) {
+      console.log(data)
     }
   }
 }

@@ -1,4 +1,5 @@
 const { checkAuth } = require('../../lib/index')
+const { paginate } = require('../../lib/paginate')
 
 module.exports = (app, client) => {
   app.get(
@@ -23,7 +24,7 @@ module.exports = (app, client) => {
           ORDER BY "ДатаЗаявки", "Выдачи"."ид7" 
           ;`)
         .then(result => {
-          res.json(result.rows.slice(0, 19))
+          paginate(result, req, res)
         })
         .catch(e => console.error(e.stack))
     }

@@ -1,0 +1,32 @@
+.table.b-table.products_table {
+  background-color: transparent;
+  font-size: 16px;
+}
+
+.table.b-table.products_table > thead > tr:hover {
+  background-color: transparent;
+}
+
+.table.b-table.products_table > tbody > tr:hover {
+  background-color: transparent;
+}
+
+.products_table__name_column {
+  width: 500px;
+}
+
+.products_table__quantity_column {
+  width: 50px;
+}
+
+.products_table__product_detail_name_column {
+  width: 140px;
+}
+
+.products_table__barcode_column {
+  width: 100px;
+}
+
+.products_table__vendor_code_column {
+  width: 100px;
+}

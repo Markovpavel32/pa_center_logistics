@@ -82,6 +82,18 @@
   margin-bottom: $distance * 8;
 }
 
+.mr-xxs {
+  margin-right: $distance / 8;
+}
+
+.mr-xs {
+  margin-right: $distance / 4;
+}
+
+.mr-sm {
+  margin-right: $distance / 2;
+}
+
 .mr-default {
   margin-right: $distance;
 }
@@ -108,4 +120,76 @@
 
 .no-padding {
   padding: 0;
+}
+
+.pt-xxs {
+  padding-top: $distance / 8;
+}
+
+.pt-xs {
+  padding-top: $distance / 4;
+}
+
+.pt-sm {
+  padding-top: $distance / 2;
+}
+
+.pt-default {
+  padding-top: $distance;
+}
+
+.pt-md {
+  padding-top: $distance * 3/2;
+}
+
+.pt-l {
+  padding-top: $distance * 2;
+}
+
+.pt-xl {
+  padding-top: $distance * 3;
+}
+
+.pt-xxl {
+  padding-top: $distance * 4;
+}
+
+.pt-xxxl {
+  padding-top: $distance * 8;
+}
+
+.pr-xxs {
+  padding-right: $distance / 8;
+}
+
+.pr-xs {
+  padding-right: $distance / 4;
+}
+
+.pr-sm {
+  padding-right: $distance / 2;
+}
+
+.pr-default {
+  padding-right: $distance;
+}
+
+.pr-md {
+  padding-right: $distance * 3/2;
+}
+
+.pr-l {
+  padding-right: $distance * 2;
+}
+
+.pr-xl {
+  padding-right: $distance * 3;
+}
+
+.pr-xxl {
+  padding-right: $distance * 4;
+}
+
+.pr-xxxl {
+  padding-right: $distance * 8;
 }

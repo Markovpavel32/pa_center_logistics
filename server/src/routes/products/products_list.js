@@ -7,13 +7,13 @@ module.exports = (app, client) => {
     checkAuth(),
     function (req, res) {
       client.query(`SELECT 
-            t."ид7" AS "товар_ид",
-            t."Код" AS "штрихкод",
-            t."Наименование" AS "товар_наименование", 
-            t."Артикул" AS "артикул", 
-            t."Характеристика" AS "размер", 
-            e."ид7" AS "единица_ид", 
-            e."Наименование" AS "единица_наименование"
+            t."ид7" AS id,
+            t."Код" AS barcode,
+            t."Наименование" AS name, 
+            t."Артикул" AS vendor_code, 
+            t."Характеристика" AS size, 
+            e."ид7" AS "product_detail_id", 
+            e."Наименование" AS "product_detail_name"
           FROM 
             db."Товары" t, 
             db."ЕдиницыТМЦ" e

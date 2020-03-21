@@ -7,14 +7,15 @@ module.exports = (app, client) => {
     checkAuth(),
     function (req, res) {
       client.query(`SELECT 
-          "Выдачи"."ид7" ид
-          ,"НомерЗаявки" номер_заявки
-          ,"ДатаЗаявки" дата_заявки
-          ,"Грузополучатели"."Наименование" грузополучатель
+          "Выдачи"."ид7" id
+          ,"НомерЗаявки" document_number
+          ,"ДатаЗаявки" document_date
+          ,"Грузополучатели"."Наименование" consignee_name
+          ,"Грузополучатели"."ид7" consignee_id
           ,(CASE
           WHEN "ДатаОтгрузки" = '0001-01-01'::date THEN null
           ELSE "ДатаОтгрузки"
-          END ) плановая_дата
+          END ) scheduled_date
           FROM db."Выдачи"
           LEFT JOIN db."Грузополучатели" ON "Грузополучатели"."ид7" = "Грузополучатель"
           WHERE
@@ -27,6 +28,65 @@ module.exports = (app, client) => {
           paginate(result, req, res)
         })
         .catch(e => console.error(e.stack))
+    }
+  )
+
+  app.get(
+    '/application_log/to_issue/products',
+    checkAuth(),
+    function (req, res) {
+      client.query(`
+        SELECT 
+          t."ид7" AS id, 
+          t."Код" AS barcode, 
+          t."Наименование" AS name, 
+          t."Артикул" AS vendor_code, 
+          t."Характеристика" AS size, 
+          e."ид7" AS product_detail_id, 
+          e."Наименование" AS product_detail_name, 
+          v."КоличествоПоЗаявке" AS quantity, 
+          v."Количество"
+        FROM 
+          db."тчВыдача" v, 
+          db."Товары" t, 
+          db."ЕдиницыТМЦ" e
+        WHERE 
+          t."ид7" = v."ВидТМЦ" AND
+          e."ид7" = v."Единица" AND
+          v."Нст" != 0 AND 
+          NOT v._del  AND 
+          v."Владелец" = '${req.query.id}'
+        ORDER BY
+          v."Нст" ASC;`)
+        .then(result => {
+          console.log(result)
+          res.json({ total: result.rows.length, result: result.rows })
+        })
+        .catch(e => console.error(e.stack))
+    }
+  )
+
+  app.post(
+    '/application_log/to_issue',
+    checkAuth(),
+    function (req, res) {
+      const { document_date, scheduled_date, document_number, document_lines, note, need_delivery, consignee} = req.body
+      const model = JSON.stringify({
+        document_date,
+        scheduled_date,
+        document_number,
+        document_lines,
+        note,
+        need_delivery,
+        customer_id: req.user.customer_id,
+        consignee
+      })
+      console.log(model)
+      client.query(`SELECT site.reception_for_storage('${model}');`)
+        .then(result => {
+          res.json(result.rows)
+        })
+      .catch(e => console.error(e))
     }
   )
 }

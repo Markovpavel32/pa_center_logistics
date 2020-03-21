@@ -41,17 +41,17 @@ export default {
       total_rows: 0,
       per_page: 20,
       fields: [{
-        key: 'товар_наименование',
+        key: 'name',
         label: 'Название',
         sortable: true
       },
       {
-        key: 'артикул',
+        key: 'vendor_code',
         label: 'Артикул',
         sortable: true
       },
       {
-        key: 'штрихкод',
+        key: 'barcode',
         label: 'Штрих-код',
         sortable: true
       },
@@ -70,7 +70,7 @@ export default {
   methods: {
     get_products_list (page = 1) {
       this.toggle_pending()
-      new AjaxOperator('products_list', this.$store, 'products_list', 'товар_ид').get({
+      new AjaxOperator('products_list', this.$store, 'products').get({
         params: {
           page,
           limit: this.per_page
@@ -91,10 +91,6 @@ export default {
 
     toggle_pending () {
       this.pending = !this.pending
-    },
-
-    add (data) {
-      console.log(data)
     }
   }
 }

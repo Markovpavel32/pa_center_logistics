@@ -12,7 +12,8 @@
            style="border: 2px solid white; font-size: 13px; line-height: 16px"
            :items="data"
            :fields="fields"
-           :current-page="current_page">
+           :current-page="current_page"
+           @row-clicked="toggle_details">
     <template v-slot:table-busy>
       <div class="text-center text-danger my-2">
         <b-spinner class="align-middle"></b-spinner>
@@ -21,6 +22,13 @@
     </template>
     <template v-slot:cell(status)="data">
       <span class="badge"  :class="status_badge(data.value)">{{ data.value }}</span>
+    </template>
+    <template v-slot:row-details="row">
+      <application-log-details
+        @close="toggle_details"
+        title="Заявка на прием товара"
+        type="appointment"
+        :item="row.item"></application-log-details>
     </template>
   </b-table>
   <b-pagination v-model="current_page"
@@ -36,10 +44,11 @@ import { AjaxOperator } from '../../lib/axios'
 import moment from 'moment'
 import { STATUS_BADGES } from './CONSTANTS'
 import ApplicationCreate from './ApplicationCreate'
+import ApplicationLogDetails from './ApplicationLogDetails'
 
 export default {
   name: 'application-log-appointment',
-  components: { ApplicationCreate },
+  components: { ApplicationLogDetails, ApplicationCreate },
   data () {
     return {
       pending: false,
@@ -49,13 +58,13 @@ export default {
       per_page: 20,
       fields: [
         {
-          key: 'app_date',
+          key: 'document_date',
           label: 'Дата создания',
           sortable: true,
           formatter: (value) => moment(value).format('DD.MM.YYYY hh:mm')
         },
         {
-          key: 'app_number',
+          key: 'document_number',
           label: 'Номер заявки',
           sortable: true
         },
@@ -65,7 +74,7 @@ export default {
           sortable: true
         },
         {
-          key: 'плановая_дата',
+          key: 'scheduled_date',
           label: 'Дата поставки',
           sortable: true,
           formatter: (value) => moment(value).format('DD.MM.YYYY')
@@ -90,7 +99,7 @@ export default {
 
     get_applications (page = 1) {
       this.toggle_pending()
-      new AjaxOperator('application_log/appointment', this.$store, 'application_appointment', 'doc_id').get({
+      new AjaxOperator('application_log/appointment', this.$store, 'application_appointment').get({
         params: {
           page,
           limit: this.per_page
@@ -104,6 +113,10 @@ export default {
         .catch(e => {
           if (e.response.status === 404) this.$router.push({ name: 'login', params: { error_text: 'Войдтите в личный кабинет' } })
         })
+    },
+
+    toggle_details (item) {
+      this.$set(item, '_showDetails', !item._showDetails)
     }
   }
 }

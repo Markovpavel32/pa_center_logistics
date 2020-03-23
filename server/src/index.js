@@ -9,7 +9,7 @@ const app = express()
 const passport = require('../src/passport/passport')
 const { User } = require('./models/user')
 
-const whitelist = ['http://localhost:8080', 'https://elated-colden-9b09d4.netlify.com']
+const whitelist = ['http://localhost:8080', 'https://elated-colden-9b09d4.netlify.com', 'https://elegant-dijkstra-ecdefa.netlify.com/']
 app.use(morgan('combined'))
 app.use(cors({
   credentials: true,

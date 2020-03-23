@@ -7,22 +7,31 @@ module.exports = (app, client) => {
     checkAuth(),
     function (req, res) {
       client.query(`SELECT 
-          "Выдачи"."ид7" id
-          ,"НомерЗаявки" document_number
-          ,"ДатаЗаявки" document_date
-          ,"Грузополучатели"."Наименование" consignee_name
-          ,"Грузополучатели"."ид7" consignee_id
-          ,(CASE
-          WHEN "ДатаОтгрузки" = '0001-01-01'::date THEN null
-          ELSE "ДатаОтгрузки"
-          END ) scheduled_date
-          FROM db."Выдачи"
-          LEFT JOIN db."Грузополучатели" ON "Грузополучатели"."ид7" = "Грузополучатель"
-          WHERE
-          "Контрагент" = '${req.user.customer_id}'
-          AND NOT "Выдачи"._del
-          AND "ДатаДок" = '0001-01-01'::date 
-          ORDER BY "ДатаЗаявки", "Выдачи"."ид7" 
+        "Выдачи"."ид7" id
+        ,"НомерЗаявки" document_number
+        ,"ДатаЗаявки" document_date
+        ,"Грузополучатели"."Наименование" consignee_name
+        ,"Грузополучатели"."ид7" consignee_id
+        ,(CASE
+        WHEN "Выполнена" THEN 'Выполнена'
+        WHEN "Статус"=-1 THEN 'Отменена'
+        WHEN "Статус">=3 THEN 'Комплектуется'
+        WHEN "Акцептована" THEN 'Акцептована'
+        WHEN "НеАкцептована" THEN 'Не акцептована'
+        ELSE ''
+        END ) status
+        ,"Грузополучатели"."Наименование" грузополучатель
+        ,(CASE
+        WHEN "ДатаОтгрузки" = '0001-01-01'::date THEN null
+        ELSE "ДатаОтгрузки"
+        END ) scheduled_date
+        FROM db."Выдачи"
+        LEFT JOIN db."Грузополучатели" ON "Грузополучатели"."ид7" = "Грузополучатель"
+        WHERE
+        "Контрагент" = '${req.user.customer_id}'
+        AND NOT "Выдачи"._del
+        AND "ДатаДок" = '0001-01-01'::date 
+        ORDER BY "ДатаЗаявки", "Выдачи"."ид7" 
           ;`)
         .then(result => {
           paginate(result, req, res)

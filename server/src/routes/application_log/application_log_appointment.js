@@ -16,6 +16,7 @@ module.exports = (app, client) => {
         END ) scheduled_date
         ,(CASE
         WHEN "Выполнена" THEN 'Выполнена'
+        WHEN "Статус"=-1 THEN 'Отменена'
         WHEN "Статус">=3 THEN 'Принимается'
         WHEN "Акцептована" THEN 'Акцептована'
         ELSE ''
@@ -28,6 +29,7 @@ module.exports = (app, client) => {
         ORDER BY "ДатаЗаявки", "ид7" 
         ;`)
         .then(result => {
+          console.log(result)
           paginate(result, req, res)
         })
         .catch(e => console.error(e.stack))

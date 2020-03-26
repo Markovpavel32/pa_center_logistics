@@ -193,3 +193,39 @@
 .pr-xxxl {
   padding-right: $distance * 8;
 }
+
+.pl-xxs {
+  padding-left: $distance / 8;
+}
+
+.pl-xs {
+  padding-left: $distance / 4;
+}
+
+.pl-sm {
+  padding-left: $distance / 2;
+}
+
+.pl-default {
+  padding-left: $distance;
+}
+
+.pl-md {
+  padding-left: $distance * 3/2;
+}
+
+.pl-l {
+  padding-left: $distance * 2;
+}
+
+.pl-xl {
+  padding-left: $distance * 3;
+}
+
+.pl-xxl {
+  padding-left: $distance * 4;
+}
+
+.pl-xxxl {
+  padding-left: $distance * 8;
+}

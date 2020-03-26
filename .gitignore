@@ -1,3 +1,5 @@
-/server/node_modules
+style/server/node_modules
 /vue/node_modules
 .idea
+/node_modules/
+/node_modules/

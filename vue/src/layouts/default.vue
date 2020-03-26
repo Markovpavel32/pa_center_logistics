@@ -1,15 +1,17 @@
 <template>
     <div class="container">
-      <b-navbar>
+      <b-navbar class="mt-l">
         <b-navbar-brand>
           <img src="../assets/MainLogo.svg" />
         </b-navbar-brand>
         <b-navbar-nav class="ml-auto">
-          <b-nav-item><b-icon icon="person-fill" variant="secondary"></b-icon>{{ username }}</b-nav-item>
-          <b-button variant="light">Выход</b-button>
+          <b-nav-item><b-icon icon="person-fill" variant="secondary"></b-icon>
+            <span class="default__username">{{ username }}</span>
+          </b-nav-item>
+          <b-button class="default__exit_btn" variant="light">Выход</b-button>
         </b-navbar-nav>
       </b-navbar>
-      <b-nav fill>
+      <b-nav fill class="mt-sm">
         <b-nav-item :to="{name: 'application_log' }" active-class="active-link" link-classes="nav-link" class="">
           <span class="default__layout__nav_item">
             <img src="../assets/application_log.svg" />

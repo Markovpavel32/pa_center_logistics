@@ -25,3 +25,34 @@
 .default-cursor {
   cursor: default !important;
 }
+
+.full-width {
+  position: relative; /* for the child pseudo-elements */
+  /* negative offset = section padding */
+  margin: 0 -30px;
+  /* add back section padding value */
+  padding: 0.25rem 30px;
+  background: #F6F5F3;
+  border-bottom: 1px solid #E1E4E8;
+  border-top: 1px solid #E1E4E8;
+}
+.full-width:before, .full-width:after {
+  content: "";
+  position: absolute;
+  /* fill vertically */
+  top: -1px;
+  bottom: -1px;
+  width: 9600px;
+  right: 100%;
+  background: #F6F5F3;
+  border-bottom: 1px solid #E1E4E8;
+  border-top: 1px solid #E1E4E8;
+}
+.full-width:after {
+  width: 320px;
+  left: 100%;
+  /* you're free to do something totally different here */
+  background: #F6F5F3;
+  border-bottom: 1px solid #E1E4E8;
+  border-top: 1px solid #E1E4E8;
+}

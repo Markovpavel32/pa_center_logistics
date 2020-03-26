@@ -8442,6 +8442,42 @@ h3 {
   padding-right: 128px;
 }
 
+.pl-xxs {
+  padding-left: 2px;
+}
+
+.pl-xs {
+  padding-left: 4px;
+}
+
+.pl-sm {
+  padding-left: 8px;
+}
+
+.pl-default {
+  padding-left: 16px;
+}
+
+.pl-md {
+  padding-left: 24px;
+}
+
+.pl-l {
+  padding-left: 32px;
+}
+
+.pl-xl {
+  padding-left: 48px;
+}
+
+.pl-xxl {
+  padding-left: 64px;
+}
+
+.pl-xxxl {
+  padding-left: 128px;
+}
+
 .bold {
   font-weight: bold;
 }
@@ -8470,6 +8506,40 @@ h3 {
   cursor: default !important;
 }
 
+.full-width {
+  position: relative;
+  /* for the child pseudo-elements */
+  /* negative offset = section padding */
+  margin: 0 -30px;
+  /* add back section padding value */
+  padding: 0.25rem 30px;
+  background: #F6F5F3;
+  border-bottom: 1px solid #E1E4E8;
+  border-top: 1px solid #E1E4E8;
+}
+
+.full-width:before, .full-width:after {
+  content: "";
+  position: absolute;
+  /* fill vertically */
+  top: -1px;
+  bottom: -1px;
+  width: 9600px;
+  right: 100%;
+  background: #F6F5F3;
+  border-bottom: 1px solid #E1E4E8;
+  border-top: 1px solid #E1E4E8;
+}
+
+.full-width:after {
+  width: 320px;
+  left: 100%;
+  /* you're free to do something totally different here */
+  background: #F6F5F3;
+  border-bottom: 1px solid #E1E4E8;
+  border-top: 1px solid #E1E4E8;
+}
+
 .badge-number-xl {
   background-color: #ff0000;
   font-size: 24px;
@@ -8482,6 +8552,10 @@ h3 {
   text-align: center;
 }
 
+.status_badge {
+  font-size: 13px;
+}
+
 .modal-content {
   border-radius: 0;
   -webkit-border-radius: 0;
@@ -8490,6 +8564,12 @@ h3 {
 
 .modal-dialog {
   border: 0 !important;
+}
+
+.common_table {
+  border: 2px solid white;
+  font-size: 13px;
+  line-height: 21px;
 }
 
 .product_add__input_filter {
@@ -8528,6 +8608,52 @@ h3 {
 
 .products_table__vendor_code_column {
   width: 100px;
+}
+
+.default__exit_btn {
+  font-size: 13px;
+}
+
+.default__username {
+  font-size: 13px;
+}
+
+.common_nav_item > a {
+  padding: 0 8px 0 0;
+}
+
+.sub-nav-bar {
+  position: relative;
+  /* for the child pseudo-elements */
+  /* negative offset = section padding */
+  margin: 0 -30px;
+  /* add back section padding value */
+  padding: 0.25rem 30px;
+  background: #F6F5F3;
+  border-bottom: 1px solid #E1E4E8;
+  border-top: 1px solid #E1E4E8;
+}
+
+.sub-nav-bar:before, .sub-nav-bar:after {
+  content: "";
+  position: absolute;
+  /* fill vertically */
+  top: -1px;
+  bottom: -1px;
+  width: 9600px;
+  right: 100%;
+  background: #F6F5F3;
+  border-bottom: 1px solid #E1E4E8;
+  border-top: 1px solid #E1E4E8;
+}
+
+.sub-nav-bar:after {
+  width: 320px;
+  left: 100%;
+  /* you're free to do something totally different here */
+  background: #F6F5F3;
+  border-bottom: 1px solid #E1E4E8;
+  border-top: 1px solid #E1E4E8;
 }
 
 /*!

@@ -10,7 +10,7 @@
   </page-header>
   <application-create type="appointment" @close="is_create = $event" v-if="is_create"></application-create>
   <b-table id="application_log_appointment_table" hover small no-local-sorting
-           style="border: 2px solid white; font-size: 13px; line-height: 16px"
+           class="common_table"
            :busy="pending"
            :items="data"
            :fields="fields"
@@ -25,7 +25,7 @@
       </div>
     </template>
     <template v-slot:cell(status)="data">
-      <span class="badge"  :class="status_badge(data.value)">{{ data.value }}</span>
+      <span class="badge status_badge"  :class="status_badge(data.value)">{{ data.value }}</span>
     </template>
     <template v-slot:row-details="row">
       <application-log-details

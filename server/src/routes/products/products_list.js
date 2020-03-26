@@ -1,5 +1,7 @@
 const { checkAuth } = require('../../lib/index')
 const { paginate } = require('../../lib/paginate')
+const { sort_by } = require('../../lib/sort_by')
+
 
 module.exports = (app, client) => {
   app.get(
@@ -11,7 +13,9 @@ module.exports = (app, client) => {
             t."Код" AS barcode,
             t."Наименование" AS name, 
             t."Артикул" AS vendor_code, 
-            t."Характеристика" AS size, 
+            t."Характеристика" AS size,
+            t."Группа" AS group,
+            t."Стоимость" AS cost,
             e."ид7" AS "product_detail_id", 
             e."Наименование" AS "product_detail_name"
           FROM 
@@ -21,7 +25,7 @@ module.exports = (app, client) => {
             t."БазоваяЕд" = e."ид7" AND
             t."Владелец" = '${req.user.customer_id}' AND 
             NOT t._del
-          ORDER BY t."Наименование", t."ид7"
+          ORDER BY ${sort_by(req.query)}
             ;`)
         .then(result => {
           paginate(result, req, res)

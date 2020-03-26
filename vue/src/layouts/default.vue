@@ -11,16 +11,41 @@
       </b-navbar>
       <b-nav fill>
         <b-nav-item :to="{name: 'application_log' }" active-class="active-link" link-classes="nav-link" class="">
-          <span class="application_log_item">
+          <span class="default__layout__nav_item">
             <img src="../assets/application_log.svg" />
             {{'Журнал заявок'}}
           </span>
         </b-nav-item>
-        <b-nav-item link-classes="nav-link">{{'Мои товары'}}</b-nav-item>
-        <b-nav-item link-classes="nav-link">{{'Журнал документов'}}</b-nav-item>
-        <b-nav-item link-classes="nav-link">{{'Статистика и отчеты'}}</b-nav-item>
-        <b-nav-item link-classes="nav-link">{{'Споры'}}</b-nav-item>
-        <b-nav-item link-classes="nav-link">{{'Оплата'}}</b-nav-item>
+        <b-nav-item :to="{name: 'my_data' }" link-classes="nav-link" active-class="active-link">
+          <span class="default__layout__nav_item">
+            <img src="../assets/my_data.png" height="22" width="22"/>
+            {{'Мои данные'}}
+          </span>
+        </b-nav-item>
+        <b-nav-item :to="{name: 'documents_log' }" link-classes="nav-link" active-class="active-link">
+          <span class="default__layout__nav_item">
+            <img src="../assets/documents_log.png" height="22" width="22"/>
+            {{'Журнал документов'}}
+          </span>
+        </b-nav-item>
+        <b-nav-item :to="{name: 'statistics' }" link-classes="nav-link" active-class="active-link">
+          <span class="default__layout__nav_item">
+            <img src="../assets/statistics.png" height="22" width="22"/>
+            {{'Статистика и отчеты'}}
+          </span>
+        </b-nav-item>
+        <b-nav-item :to="{name: 'disputes' }" link-classes="nav-link" active-class="active-link">
+          <span class="default__layout__nav_item">
+            <img src="../assets/disputes.png" height="22" width="22"/>
+            {{'Споры'}}
+          </span>
+        </b-nav-item>
+        <b-nav-item :to="{name: 'payment' }" link-classes="nav-link" active-class="active-link">
+          <span class="default__layout__nav_item">
+            <img src="../assets/payment.png" height="22" width="22"/>
+            {{'Оплата'}}
+          </span>
+        </b-nav-item>
       </b-nav>
       <router-view></router-view>
     </div>
@@ -44,7 +69,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-
-</style>

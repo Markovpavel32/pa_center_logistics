@@ -10,7 +10,7 @@
   border-bottom: 2px solid $red;
 }
 
-.application_log_item {
+.default__layout__nav_item {
   padding-bottom: $distance / 4;
 }
 
@@ -20,4 +20,8 @@
 
 .clickable {
   cursor: pointer;
+}
+
+.default-cursor {
+  cursor: default !important;
 }

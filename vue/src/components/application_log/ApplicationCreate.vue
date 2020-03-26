@@ -3,7 +3,10 @@
     <b-card bg-variant="light">
       <i @click="$emit('close', false)" class="icon-remove ml-auto d-flex flex-row-reverse clickable"></i>
       <div class="d-flex justify-content-between">
-        <b-card-title>{{ title }}</b-card-title>
+        <b-card-title>
+          <span class="mr-default">{{ title }}</span>
+          <slot name="status"></slot>
+        </b-card-title>
         <div>
           <slot name="actions"></slot>
         </div>
@@ -55,16 +58,16 @@
         <b-input v-if="!is_edit_mode" class="col-sm-6 pl-0" v-model="query" readonly/>
         <vue-bootstrap-typeahead v-else class="col-sm-6 pl-0"
                                  v-model="query"
-                                 :serializer="item => item.name"
+                                 :serializer="item => item.consignee_name"
                                  :data="consignee_list"
                                  @hit="model.consignee = $event.id"
                                  >
           <template slot="suggestion" slot-scope="{ data }">
             <div>
-              {{ data.name }}
+              {{ data.consignee_name }}
             </div>
             <div class="text-secondary">
-              <small>{{ data.address }}</small>
+              <small>{{ data.consignee_address }}</small>
             </div>
           </template>
         </vue-bootstrap-typeahead>
@@ -212,31 +215,25 @@ export default {
     },
 
     prepare_data (data) {
+      data = {
+        document_date: moment(this.model.document_date, 'DD.MM.YYYY', 'ru').format('YYYY-MM-DDThh:mm:ss.SSSZ'),
+        scheduled_date: moment(this.model.scheduled_date, 'DD.MM.YYYY', 'ru').format('YYYY-MM-DDThh:mm:ss.SSSZ'),
+        document_number: this.model.document_number,
+        document_lines: [...this.model.document_lines]
+      }
       if (this.type === 'appointment') {
-        data = {
-          document_date: moment(this.model.document_date, 'DD.MM.YYYY', 'ru').format('YYYY-MM-DDThh:mm:ss.SSSZ'),
-          scheduled_date: moment(this.model.scheduled_date, 'DD.MM.YYYY', 'ru').format('YYYY-MM-DDThh:mm:ss.SSSZ'),
-          document_number: this.model.document_number,
-          document_lines: [...this.model.document_lines]
-        }
         if (this.model.it_return) {
           data.it_return = this.model.it_return
         }
-        if (this.model.note) {
-          data.note = this.model.note
-        }
       } else if (this.type === 'to_issue') {
-        data = {
-          document_date: moment(this.model.document_date, 'DD.MM.YYYY', 'ru').format('YYYY-MM-DDThh:mm:ss.SSSZ'),
-          scheduled_date: moment(this.model.scheduled_date, 'DD.MM.YYYY', 'ru').format('YYYY-MM-DDThh:mm:ss.SSSZ'),
-          document_number: this.model.document_number,
-          document_lines: [...this.model.document_lines],
-          need_delivery: !this.model.self_delivery,
-          consignee: this.model.consignee
-        }
-        if (this.model.note) {
-          data.note = this.model.note
-        }
+        data.need_delivery = !this.model.self_delivery
+        data.consignee = this.model.consignee
+      }
+      if (this.model.note) {
+        data.note = this.model.note
+      }
+      if (this.model.id) {
+        data.document_id = this.model.id
       }
       return data
     }

@@ -1,5 +1,6 @@
 const { checkAuth } = require('../../lib/index')
 const { paginate } = require('../../lib/paginate')
+const { sort_by } = require('../../lib/sort_by')
 
 module.exports = (app, client) => {
   app.get(
@@ -15,21 +16,19 @@ module.exports = (app, client) => {
         ELSE "ДатаСдачи"
         END ) scheduled_date
         ,(CASE
-        WHEN "Выполнена" THEN 'Выполнена'
-        WHEN "Статус"=-1 THEN 'Отменена'
-        WHEN "Статус">=3 THEN 'Принимается'
+        WHEN "Статус">=3 THEN 'Принята'
+        WHEN "Статус">=1 THEN 'В работе'
         WHEN "Акцептована" THEN 'Акцептована'
-        ELSE ''
+        ELSE 'Ожидает акцептования'
         END ) status
         FROM db."Приемы"
         WHERE
         "Контрагент" = '${req.user.customer_id}'
         AND NOT _del
         AND "ДатаДок" = '0001-01-01'::date 
-        ORDER BY "ДатаЗаявки", "ид7" 
+        ORDER BY ${sort_by(req.query)}
         ;`)
         .then(result => {
-          console.log(result)
           paginate(result, req, res)
         })
         .catch(e => console.error(e.stack))

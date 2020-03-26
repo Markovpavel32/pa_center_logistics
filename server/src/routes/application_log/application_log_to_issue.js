@@ -1,5 +1,6 @@
 const { checkAuth } = require('../../lib/index')
 const { paginate } = require('../../lib/paginate')
+const { sort_by } = require('../../lib/sort_by')
 
 module.exports = (app, client) => {
   app.get(
@@ -13,12 +14,14 @@ module.exports = (app, client) => {
         ,"Грузополучатели"."Наименование" consignee_name
         ,"Грузополучатели"."ид7" consignee_id
         ,(CASE
-        WHEN "Выполнена" THEN 'Выполнена'
         WHEN "Статус"=-1 THEN 'Отменена'
-        WHEN "Статус">=3 THEN 'Комплектуется'
+        WHEN "КОтгрузке" THEN 'КОтгрузке'
+        WHEN "Скомплектован" AND "ПодобранПолностью" THEN 'Скомплектована'
+        WHEN "Скомплектован" THEN 'Скомплектована частично'
+        WHEN "Статус">=1 THEN 'Комплектуется'
         WHEN "Акцептована" THEN 'Акцептована'
         WHEN "НеАкцептована" THEN 'Не акцептована'
-        ELSE ''
+        ELSE 'Ожидает акцептования'
         END ) status
         ,"Грузополучатели"."Наименование" грузополучатель
         ,(CASE
@@ -31,8 +34,8 @@ module.exports = (app, client) => {
         "Контрагент" = '${req.user.customer_id}'
         AND NOT "Выдачи"._del
         AND "ДатаДок" = '0001-01-01'::date 
-        ORDER BY "ДатаЗаявки", "Выдачи"."ид7" 
-          ;`)
+        ORDER BY ${sort_by(req.query)}
+        ;`)
         .then(result => {
           paginate(result, req, res)
         })
@@ -68,7 +71,6 @@ module.exports = (app, client) => {
         ORDER BY
           v."Нст" ASC;`)
         .then(result => {
-          console.log(result)
           res.json({ total: result.rows.length, result: result.rows })
         })
         .catch(e => console.error(e.stack))
@@ -90,8 +92,7 @@ module.exports = (app, client) => {
         customer_id: req.user.customer_id,
         consignee
       })
-      console.log(model)
-      client.query(`SELECT site.reception_for_storage('${model}');`)
+      client.query(`SELECT site.shipment_from_storage('${model}');`)
         .then(result => {
           res.json(result.rows)
         })

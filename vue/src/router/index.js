@@ -7,6 +7,9 @@ import ApplicationLog from '../components/application_log/ApplicationLog'
 import ApplicationLogAppointment from '../components/application_log/ApplicationLogAppointment'
 import ApplicationLogDelivery from '../components/application_log/ApplicationLogDelivery'
 import ApplicationLogToIssue from '../components/application_log/ApplicationLogToIssue'
+import ProductsList from '../components/product/ProductsList'
+import MyData from '../components/my_data/MyData'
+import ConsigneesList from '../components/consignees/ConsigneesList'
 
 Vue.use(VueRouter)
 
@@ -39,6 +42,40 @@ const routes = [
         component: ApplicationLogDelivery
       }
     ]
+  },
+  {
+    path: '/data',
+    name: 'my_data',
+    component: MyData,
+    redirect: { name: 'products_list' },
+    children: [
+      {
+        path: 'products_list',
+        name: 'products_list',
+        component: ProductsList
+      },
+      {
+        path: 'consignees_list',
+        name: 'consignees_list',
+        component: ConsigneesList
+      }
+    ]
+  },
+  {
+    path: '/documents_log',
+    name: 'documents_log'
+  },
+  {
+    path: '/statistics',
+    name: 'statistics'
+  },
+  {
+    path: '/disputes',
+    name: 'disputes'
+  },
+  {
+    path: '/payment',
+    name: 'payment'
   },
   {
     path: '/about',

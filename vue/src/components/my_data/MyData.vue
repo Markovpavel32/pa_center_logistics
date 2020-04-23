@@ -18,6 +18,10 @@ export default {
         title: 'Товары'
       },
       {
+        route: 'products_group',
+        title: 'Группы товаров'
+      },
+      {
         route: 'consignees_list',
         title: 'Грузополучатели'
       }]

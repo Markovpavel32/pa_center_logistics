@@ -8366,6 +8366,78 @@ h3 {
   margin-right: 128px;
 }
 
+.ml-xxs {
+  margin-left: 2px;
+}
+
+.ml-xs {
+  margin-left: 4px;
+}
+
+.ml-sm {
+  margin-left: 8px;
+}
+
+.ml-default {
+  margin-left: 16px;
+}
+
+.ml-md {
+  margin-left: 24px;
+}
+
+.ml-l {
+  margin-left: 32px;
+}
+
+.ml-xl {
+  margin-left: 48px;
+}
+
+.ml-xxl {
+  margin-left: 64px;
+}
+
+.ml-xxxl {
+  margin-left: 128px;
+}
+
+.mx-xxs {
+  margin: 0 2px;
+}
+
+.mx-xs {
+  margin: 0 4px;
+}
+
+.mx-sm {
+  margin: 0 8px;
+}
+
+.mx-default {
+  margin: 0 16px;
+}
+
+.mx-md {
+  margin: 0 24px;
+}
+
+.mx-l {
+  margin: 0 32px;
+}
+
+.mx-xl {
+  margin: 0 48px;
+}
+
+.mx-xxl {
+  margin: 0 64px;
+}
+
+.mx-xxxl {
+  margin: 0 128px;
+}
+
 .no-padding {
   padding: 0;
 }

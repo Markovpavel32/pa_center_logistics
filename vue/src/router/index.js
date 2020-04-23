@@ -55,6 +55,10 @@ const routes = [
         component: ProductsList
       },
       {
+        path: 'products_group',
+        name: 'products_group'
+      },
+      {
         path: 'consignees_list',
         name: 'consignees_list',
         component: ConsigneesList

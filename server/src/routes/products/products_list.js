@@ -14,7 +14,7 @@ module.exports = (app, client) => {
             t."Наименование" AS name, 
             t."Артикул" AS vendor_code, 
             t."Характеристика" AS size,
-            t."Группа" AS group,
+            t."Группа" AS products_group,
             t."Стоимость" AS cost,
             e."ид7" AS "product_detail_id", 
             e."Наименование" AS "product_detail_name"

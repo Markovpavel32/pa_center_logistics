@@ -2,7 +2,7 @@
     <div class="container">
       <b-navbar class="mt-l">
         <b-navbar-brand>
-          <img src="../assets/MainLogo.svg" />
+          <img src="../assets/MainLogo.svg" width="270" height="30"/>
         </b-navbar-brand>
         <b-navbar-nav class="ml-auto">
           <b-nav-item><b-icon icon="person-fill" variant="secondary"></b-icon>

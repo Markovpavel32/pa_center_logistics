@@ -1,6 +1,17 @@
 <template>
   <div>
-    <page-header title="Список товаров"></page-header>
+    <page-header title="Список товаров">
+      <template slot="actions">
+        <b-button variant="warning" squared class="d-flex align-items-center" @click="is_create = !is_create">
+          <img src="../../assets/plus-warning-filled.png" width="24" hight="24"/>
+          <span>Создать заявку</span>
+        </b-button>
+      </template>
+    </page-header>
+    <product-create v-if="is_create"
+                    @close="is_create = $event"
+                    title="Новая заявка на добавление товара"
+    ></product-create>
     <b-table id="products_list" hover small no-local-sorting
              style="border: 2px solid white; font-size: 13px; line-height: 16px"
              :busy="pending"
@@ -28,9 +39,10 @@
 import PageHeader from '../common/PageHeader'
 import { AjaxOperator } from '../../lib/axios'
 import debounce from 'lodash.debounce'
+import ProductCreate from './ProductCreate'
 export default {
   name: 'products-list',
-  components: { PageHeader },
+  components: { ProductCreate, PageHeader },
   data () {
     return {
       pending: false,
@@ -49,24 +61,23 @@ export default {
         sortable: true
       },
       {
-        key: 'group',
+        key: 'products_group',
         label: 'Группа',
-        sortable: false
-      },
-      {
-        key: 'product_detail_name',
-        label: 'Ед. измерения',
         sortable: true
       },
       {
         key: 'cost',
         label: 'Сотимость',
         sortable: true
+      },
+      {
+        label: 'Статус'
       }],
       table_sorting: {
         sort_by: 'name',
         sort_desc: false
-      }
+      },
+      is_create: false
     }
   },
 

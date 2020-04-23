@@ -10,10 +10,16 @@ import ApplicationLogToIssue from '../components/application_log/ApplicationLogT
 import ProductsList from '../components/product/ProductsList'
 import MyData from '../components/my_data/MyData'
 import ConsigneesList from '../components/consignees/ConsigneesList'
+import HelloWorld from '../views/HelloWorld'
 
 Vue.use(VueRouter)
 
 const routes = [
+  {
+    path: '/',
+    name: 'hello-world',
+    component: HelloWorld
+  },
   {
     path: '/home',
     name: 'home',
